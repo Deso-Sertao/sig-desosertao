@@ -39,11 +39,11 @@
         <script src="js/tailDT.js"></script>
 <script src="js/nouislider.min.js"></script>
 <script src="js/wNumb.js"></script>
-        <script src="data/SAAS7Reservatrios_1.js"></script>
+        <script src="data/SAAS7Reservatrios_2.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[-10.706538259843489,-38.44978502464982],[-9.536740822170353,-36.56733238720553]]);
+        })
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
@@ -61,6 +61,9 @@
         .className += ' fas fa-ruler';
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
         }
         var layer_OpenStreetMapmonochrome_0 = L.tileLayer('http://a.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
             opacity: 1.0,
@@ -68,7 +71,13 @@
         });
         layer_OpenStreetMapmonochrome_0;
         map.addLayer(layer_OpenStreetMapmonochrome_0);
-        function pop_SAAS7Reservatrios_1(feature, layer) {
+        var layer_GoogleSatellite_1 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+        });
+        layer_GoogleSatellite_1;
+        map.addLayer(layer_GoogleSatellite_1);
+        function pop_SAAS7Reservatrios_2(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['wkt'] !== null ? Autolinker.link(String(feature.properties['wkt'])) : '') + '</td>\
@@ -262,15 +271,18 @@
                         <th scope="row">qtlocais</th>\
                         <td>' + (feature.properties['qtlocais'] !== null ? Autolinker.link(String(feature.properties['qtlocais'])) : '') + '</td>\
                     </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['idr'] !== null ? Autolinker.link(String(feature.properties['idr'])) : '') + '</td>\
+                    </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_SAAS7Reservatrios_1_0(feature) {
+        function style_SAAS7Reservatrios_2_0(feature) {
             switch(String(feature.properties['subtipoiop'])) {
                 case 'REL':
                     return {
-                pane: 'pane_SAAS7Reservatrios_1',
+                pane: 'pane_SAAS7Reservatrios_2',
         rotationAngle: 0.0,
         rotationOrigin: 'center center',
         icon: L.icon({
@@ -282,7 +294,7 @@
                     break;
                 case 'RAP':
                     return {
-                pane: 'pane_SAAS7Reservatrios_1',
+                pane: 'pane_SAAS7Reservatrios_2',
         rotationAngle: 0.0,
         rotationOrigin: 'center center',
         icon: L.icon({
@@ -294,7 +306,7 @@
                     break;
                 case 'REN':
                     return {
-                pane: 'pane_SAAS7Reservatrios_1',
+                pane: 'pane_SAAS7Reservatrios_2',
         rotationAngle: 0.0,
         rotationOrigin: 'center center',
         icon: L.icon({
@@ -306,34 +318,34 @@
                     break;
             }
         }
-        map.createPane('pane_SAAS7Reservatrios_1');
-        map.getPane('pane_SAAS7Reservatrios_1').style.zIndex = 401;
-        map.getPane('pane_SAAS7Reservatrios_1').style['mix-blend-mode'] = 'normal';
-        var layer_SAAS7Reservatrios_1 = new L.geoJson(json_SAAS7Reservatrios_1, {
+        map.createPane('pane_SAAS7Reservatrios_2');
+        map.getPane('pane_SAAS7Reservatrios_2').style.zIndex = 402;
+        map.getPane('pane_SAAS7Reservatrios_2').style['mix-blend-mode'] = 'normal';
+        var layer_SAAS7Reservatrios_2 = new L.geoJson(json_SAAS7Reservatrios_2, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_SAAS7Reservatrios_1',
-            layerName: 'layer_SAAS7Reservatrios_1',
-            pane: 'pane_SAAS7Reservatrios_1',
-            onEachFeature: pop_SAAS7Reservatrios_1,
+            dataVar: 'json_SAAS7Reservatrios_2',
+            layerName: 'layer_SAAS7Reservatrios_2',
+            pane: 'pane_SAAS7Reservatrios_2',
+            onEachFeature: pop_SAAS7Reservatrios_2,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.marker(latlng, style_SAAS7Reservatrios_1_0(feature));
+                return L.marker(latlng, style_SAAS7Reservatrios_2_0(feature));
             },
         });
-        bounds_group.addLayer(layer_SAAS7Reservatrios_1);
-        map.addLayer(layer_SAAS7Reservatrios_1);
+        bounds_group.addLayer(layer_SAAS7Reservatrios_2);
+        map.addLayer(layer_SAAS7Reservatrios_2);
         setBounds();
         var i = 0;
-        layer_SAAS7Reservatrios_1.eachLayer(function(layer) {
+        layer_SAAS7Reservatrios_2.eachLayer(function(layer) {
             var context = {
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['geocodigo'] !== null?String('<div style="color: #000000; font-size: 8pt; font-style: italic; font-family: \'Arial [TMC ]\', sans-serif;">' + layer.feature.properties['geocodigo']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_SAAS7Reservatrios_1'});
+            layer.bindTooltip((layer.feature.properties['geocodigo'] !== null?String('<div style="color: #000000; font-size: 8pt; font-style: italic; font-family: \'Arial [TMC ]\', sans-serif;">' + layer.feature.properties['geocodigo']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_SAAS7Reservatrios_2'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
@@ -341,10 +353,10 @@
               i++;
         });
         map.addControl(new L.Control.Search({
-            layer: layer_SAAS7Reservatrios_1,
+            layer: layer_SAAS7Reservatrios_2,
             initial: false,
             hideMarkerOnCollapse: true,
-            propertyName: 'nomeiop'}));
+            propertyName: 'idr'}));
         document.getElementsByClassName('search-button')[0].className +=
          ' fa fa-binoculars';
         var mapDiv = document.getElementById('map');
@@ -366,7 +378,7 @@
         document.getElementById("all").appendChild(col1);
         document.getElementById("all").appendChild(col2);
         col1.appendChild(mapDiv)
-        var Filters = {"estex": "int","capacidade": "int","qtlocais": "int","fid": "int","nortey": "int","latitude": "real","longitude": "real","spda": "str","endereco": "str","processos": "str","anoinstala": "str","sitfunc": "str","nmed": "str","abastece": "str","subtiponm": "str","nmax": "str","macroproce": "str","saanome": "str","subtipoiop": "str","saasigla": "str","estelevac": "str","distribdn": "str","localidade": "str","nomeiop": "str","indiqv": "str","visaogeral": "str","limpmat": "str","subsaanome": "str","contatos": "str","extramat": "str","regimefunc": "str","tipoiop": "str","wkt": "str","extradn": "str","operalocal": "str","unidadeorg": "str","monitorv": "str","doctecnica": "str","geocodigo": "str","obs": "str","monitorq": "str","limpdn": "str","alimentmat": "str","camara": "str","municipio": "str","aop": "str","monitorn": "str","nmin": "str","alimentdn": "str","atividades": "str","distribmat": "str"};
+        var Filters = {"estex": "int","capacidade": "int","qtlocais": "int","fid": "int","nortey": "int","latitude": "real","longitude": "real","spda": "str","endereco": "str","processos": "str","anoinstala": "str","sitfunc": "str","nmed": "str","abastece": "str","subtiponm": "str","nmax": "str","macroproce": "str","saanome": "str","subtipoiop": "str","saasigla": "str","estelevac": "str","distribdn": "str","localidade": "str","nomeiop": "str","indiqv": "str","visaogeral": "str","limpmat": "str","subsaanome": "str","contatos": "str","extramat": "str","regimefunc": "str","tipoiop": "str","wkt": "str","extradn": "str","idr": "str","operalocal": "str","unidadeorg": "str","monitorv": "str","doctecnica": "str","geocodigo": "str","obs": "str","monitorq": "str","limpdn": "str","alimentmat": "str","camara": "str","municipio": "str","aop": "str","monitorn": "str","nmin": "str","alimentdn": "str","atividades": "str","distribmat": "str"};
         function filterFunc() {
           map.eachLayer(function(lyr){
           if ("options" in lyr && "dataVar" in lyr["options"]){
@@ -2044,6 +2056,264 @@
             div_extradn.appendChild(lab_extradn);
             document.getElementById("menu").appendChild(
                 document.createElement("div"));
+            var div_idr = document.createElement('div');
+            div_idr.id = "div_idr";
+            div_idr.className= "filterselect";
+            document.getElementById("menu").appendChild(div_idr);
+            sel_idr = document.createElement('select');
+            sel_idr.multiple = true;
+            sel_idr.id = "sel_idr";
+            var idr_options_str = "<option value='' unselected></option>";
+            sel_idr.onchange = function(){filterFunc()};
+            idr_options_str  += '<option value="R-1 Reservatório Apoiado Olhos dágua (Lourdes)">R-1 Reservatório Apoiado Olhos dágua (Lourdes)</option>';
+            idr_options_str  += '<option value="R-2 Reservatório Elevado - Território Quilombola Caraíbas">R-2 Reservatório Elevado - Território Quilombola Caraíbas</option>';
+            idr_options_str  += '<option value="R-4 Reservatório Elevado - Cachoeirinha">R-4 Reservatório Elevado - Cachoeirinha</option>';
+            idr_options_str  += '<option value="R-5 REL Barra da Onça">R-5 REL Barra da Onça</option>';
+            idr_options_str  += '<option value="R-6 REL Lagoa das Areias">R-6 REL Lagoa das Areias</option>';
+            idr_options_str  += '<option value="R-7 Reservatório Elevado - Várzea Nova">R-7 Reservatório Elevado - Várzea Nova</option>';
+            idr_options_str  += '<option value="R-8 Reservatório Apoiado - EE-1A - Área 1 (Semiárido) - Serra do Moreira">R-8 Reservatório Apoiado - EE-1A - Área 1 (Semiárido) - Serra do Moreira</option>';
+            idr_options_str  += '<option value="R-9 Reservatório Apoiado - ETA - Jacaré Curituba">R-9 Reservatório Apoiado - ETA - Jacaré Curituba</option>';
+            idr_options_str  += '<option value="R-10 Reservatório Elevado - Jacaré-Curituba">R-10 Reservatório Elevado - Jacaré-Curituba</option>';
+            idr_options_str  += '<option value="R-11 Reservatório Apoiado - EE Quereréu-Jibóia - Quereréu">R-11 Reservatório Apoiado - EE Quereréu-Jibóia - Quereréu</option>';
+            idr_options_str  += '<option value="R-12 Reservatório Elevado - Distribuição - Tanque de Pedra">R-12 Reservatório Elevado - Distribuição - Tanque de Pedra</option>';
+            idr_options_str  += '<option value="R-13 Reservatório Apoiado - Área 300 - Prox à Sede municipal de Canhoba">R-13 Reservatório Apoiado - Área 300 - Prox à Sede municipal de Canhoba</option>';
+            idr_options_str  += '<option value="R-14 Reservatório Elevado - Agrovila Mandacaru I">R-14 Reservatório Elevado - Agrovila Mandacaru I</option>';
+            idr_options_str  += '<option value="R-15 Reservatório Elevado - Agrovila Mandacaru II">R-15 Reservatório Elevado - Agrovila Mandacaru II</option>';
+            idr_options_str  += '<option value="R-16 Reservatório Elevado - Entre Jibóia e Lagoa do Porco">R-16 Reservatório Elevado - Entre Jibóia e Lagoa do Porco</option>';
+            idr_options_str  += '<option value="R-17 Reservatório Elevado - Curituba">R-17 Reservatório Elevado - Curituba</option>';
+            idr_options_str  += '<option value="R-18 Reservatório Apoiado - Pedra Dágua">R-18 Reservatório Apoiado - Pedra Dágua</option>';
+            idr_options_str  += '<option value="R-19 Reservatório Elevado - Sede Canindé">R-19 Reservatório Elevado - Sede Canindé</option>';
+            idr_options_str  += '<option value="R-20 Reservatório Elevado - Capim Grosso">R-20 Reservatório Elevado - Capim Grosso</option>';
+            idr_options_str  += '<option value="R-21 Reservatório Elevado - Área 1800 - Sede municipal de Carira">R-21 Reservatório Elevado - Área 1800 - Sede municipal de Carira</option>';
+            idr_options_str  += '<option value="R-22 Reservatório Apoiado 1 - Área 1800 - Sede municipal de Carira">R-22 Reservatório Apoiado 1 - Área 1800 - Sede municipal de Carira</option>';
+            idr_options_str  += '<option value="R-23 Reservatório Apoiado 2 - Área 1800 - Sede municipal de Carira">R-23 Reservatório Apoiado 2 - Área 1800 - Sede municipal de Carira</option>';
+            idr_options_str  += '<option value="R-24 Reservatório Apoiado - ETA Canindé - Poço de Sucção">R-24 Reservatório Apoiado - ETA Canindé - Poço de Sucção</option>';
+            idr_options_str  += '<option value="R-25 Reservatório Elevado - Linda França">R-25 Reservatório Elevado - Linda França</option>';
+            idr_options_str  += '<option value="R-26 Reservatório Apoiado - EE Sede municipal e João Pereira - Sede municipal de Nossa Senhora de Lourdes">R-26 Reservatório Apoiado - EE Sede municipal e João Pereira - Sede municipal de Nossa Senhora de Lourdes</option>';
+            idr_options_str  += '<option value="R-27 Reservatório Elevado - Distribuição - Sede municipal Poço Redondo">R-27 Reservatório Elevado - Distribuição - Sede municipal Poço Redondo</option>';
+            idr_options_str  += '<option value="R-28 Reservatório Apoiado 1 - Área 400 - Canhoba">R-28 Reservatório Apoiado 1 - Área 400 - Canhoba</option>';
+            idr_options_str  += '<option value="R-29 Reservatório Apoiado 2 - Área 400 - Canhoba">R-29 Reservatório Apoiado 2 - Área 400 - Canhoba</option>';
+            idr_options_str  += '<option value="R-30 Reservatório Apoiado - Área 200 - ETA - Lagoa dos Campinhos">R-30 Reservatório Apoiado - Área 200 - ETA - Lagoa dos Campinhos</option>';
+            idr_options_str  += '<option value="R-31 Reservatório Apoiado 1 - Área 500 - Itabi">R-31 Reservatório Apoiado 1 - Área 500 - Itabi</option>';
+            idr_options_str  += '<option value="R-32 Reservatório Apoiado 2 - Área 500 - Itabi">R-32 Reservatório Apoiado 2 - Área 500 - Itabi</option>';
+            idr_options_str  += '<option value="R-33 Reservatório Elevado 2 - Distribuição - Várzea do São Francisco (Araticum)">R-33 Reservatório Elevado 2 - Distribuição - Várzea do São Francisco (Araticum)</option>';
+            idr_options_str  += '<option value="R-34 Reservatório Elevado 1 - Distribuição - Várzea do São Francisco (Araticum)">R-34 Reservatório Elevado 1 - Distribuição - Várzea do São Francisco (Araticum)</option>';
+            idr_options_str  += '<option value="R-35 Reservatório de Transição - Grande Integrado Alto Sertão">R-35 Reservatório de Transição - Grande Integrado Alto Sertão</option>';
+            idr_options_str  += '<option value="R-37 RAP Tanque Novo">R-37 RAP Tanque Novo</option>';
+            idr_options_str  += '<option value="R-38 Reservatório Elevado - Área 1300 - Pedra Branca">R-38 Reservatório Elevado - Área 1300 - Pedra Branca</option>';
+            idr_options_str  += '<option value="R-39 Reservatório Elevado - Área 1900 - Bravo Urubu">R-39 Reservatório Elevado - Área 1900 - Bravo Urubu</option>';
+            idr_options_str  += '<option value="R-40 Reservatório Elevado de Escurial">R-40 Reservatório Elevado de Escurial</option>';
+            idr_options_str  += '<option value="R-41 Reservatório Apoiado Carro Quebrado">R-41 Reservatório Apoiado Carro Quebrado</option>';
+            idr_options_str  += '<option value="R-42 Reservatório Apoiado Área-2000">R-42 Reservatório Apoiado Área-2000</option>';
+            idr_options_str  += '<option value="R-43 Reservatório Elevado - Alagadiço">R-43 Reservatório Elevado - Alagadiço</option>';
+            idr_options_str  += '<option value="R-44 RAP Riachinho, Queimadas">R-44 RAP Riachinho, Queimadas</option>';
+            idr_options_str  += '<option value="R-45 Reservatório Apioado Pau Ferro 1">R-45 Reservatório Apioado Pau Ferro 1</option>';
+            idr_options_str  += '<option value="R-46 RAP Pau Ferro 2">R-46 RAP Pau Ferro 2</option>';
+            idr_options_str  += '<option value="R-47 Reservatório Elevado - Distribuição - Sede municipal São Miguel do Aleixo">R-47 Reservatório Elevado - Distribuição - Sede municipal São Miguel do Aleixo</option>';
+            idr_options_str  += '<option value="R-48 RAP Ass. Paraíso de São Pedro">R-48 RAP Ass. Paraíso de São Pedro</option>';
+            idr_options_str  += '<option value="R-49 Resservatório Apoiado Patos">R-49 Resservatório Apoiado Patos</option>';
+            idr_options_str  += '<option value="R-50 REL Lagoa do Veado">R-50 REL Lagoa do Veado</option>';
+            idr_options_str  += '<option value="R-51 Reservatório Elevado - Cruz das Graças">R-51 Reservatório Elevado - Cruz das Graças</option>';
+            idr_options_str  += '<option value="R-52 REL Arari">R-52 REL Arari</option>';
+            idr_options_str  += '<option value="R-53 Reservatório Elevado - Lajes">R-53 Reservatório Elevado - Lajes</option>';
+            idr_options_str  += '<option value="R-54 Reservatório Apoiado (Semiárido EE-3) - Cruz das Graças">R-54 Reservatório Apoiado (Semiárido EE-3) - Cruz das Graças</option>';
+            idr_options_str  += '<option value="R-56 Reservatório Apoiado - Senharol">R-56 Reservatório Apoiado - Senharol</option>';
+            idr_options_str  += '<option value="R-57 Reservatório Apoiado (Boa Esperança / Pau do Caixão)">R-57 Reservatório Apoiado (Boa Esperança / Pau do Caixão)</option>';
+            idr_options_str  += '<option value="R-58 Reservatório Apoiado para Tanque de Pedra - Sede municipal">R-58 Reservatório Apoiado para Tanque de Pedra - Sede municipal</option>';
+            idr_options_str  += '<option value="R-59 REL Bonsucesso">R-59 REL Bonsucesso</option>';
+            idr_options_str  += '<option value="R-60 Reservatório Elevado - Mocambo">R-60 Reservatório Elevado - Mocambo</option>';
+            idr_options_str  += '<option value="R-61 Reservatório Apoiado - Distribuição - Poço dos Paus">R-61 Reservatório Apoiado - Distribuição - Poço dos Paus</option>';
+            idr_options_str  += '<option value="R-62 Reservatório Elevado - Distribuição - Ponto Chique">R-62 Reservatório Elevado - Distribuição - Ponto Chique</option>';
+            idr_options_str  += '<option value="R-63 Reservatório Apoiado Queimadinha">R-63 Reservatório Apoiado Queimadinha</option>';
+            idr_options_str  += '<option value="R-64 Reservatório Elevado - Área 1100 - Sede municipal de Cumbe">R-64 Reservatório Elevado - Área 1100 - Sede municipal de Cumbe</option>';
+            idr_options_str  += '<option value="R-65 Reservatório Elevado - Área 1000 - Sede municipal de Feira Nova">R-65 Reservatório Elevado - Área 1000 - Sede municipal de Feira Nova</option>';
+            idr_options_str  += '<option value="R-66 Reservatório Elevado - Distribuição - Saco Grande">R-66 Reservatório Elevado - Distribuição - Saco Grande</option>';
+            idr_options_str  += '<option value="R-67 Reservatório Elevado - Alecrim">R-67 Reservatório Elevado - Alecrim</option>';
+            idr_options_str  += '<option value="R-74 Reservatório Elevado - Frutuoso">R-74 Reservatório Elevado - Frutuoso</option>';
+            idr_options_str  += '<option value="R-75 Reservatório Elevado - Território Quilombola Lagoa dos Campinhos - Povoado Criolo">R-75 Reservatório Elevado - Território Quilombola Lagoa dos Campinhos - Povoado Criolo</option>';
+            idr_options_str  += '<option value="R-77 Reservatório Elevado - Lagoa Bonita (Feirinha)">R-77 Reservatório Elevado - Lagoa Bonita (Feirinha)</option>';
+            idr_options_str  += '<option value="R-78 Reservatório Elevado - Alto do Cruzeiro - Distribuição - Sede municipal de Aquidabã">R-78 Reservatório Elevado - Alto do Cruzeiro - Distribuição - Sede municipal de Aquidabã</option>';
+            idr_options_str  += '<option value="R-79 Reservatório Elevado - Distribuição - Papel dos Dias">R-79 Reservatório Elevado - Distribuição - Papel dos Dias</option>';
+            idr_options_str  += '<option value="R-84 Reservatório Elevado 1 - Distribuição - Sede municipal de Frei Paulo">R-84 Reservatório Elevado 1 - Distribuição - Sede municipal de Frei Paulo</option>';
+            idr_options_str  += '<option value="R-85 Reservatório Elevado 2 - Distribuição - Sede municipal de Frei Paulo">R-85 Reservatório Elevado 2 - Distribuição - Sede municipal de Frei Paulo</option>';
+            idr_options_str  += '<option value="R-88 Reservatório Elevado Serra Redonda / Nossa Senhora Salete">R-88 Reservatório Elevado Serra Redonda / Nossa Senhora Salete</option>';
+            idr_options_str  += '<option value="R-92 Reservatório Elevado - Mocambo">R-92 Reservatório Elevado - Mocambo</option>';
+            idr_options_str  += '<option value="R-93 Reservatório Elevado - Gravatá">R-93 Reservatório Elevado - Gravatá</option>';
+            idr_options_str  += '<option value="R-94 Reservatório Elevado - Serra">R-94 Reservatório Elevado - Serra</option>';
+            idr_options_str  += '<option value="R-95 Reservatório Elevado - Distribuição - Sede municipal Pedra Mole">R-95 Reservatório Elevado - Distribuição - Sede municipal Pedra Mole</option>';
+            idr_options_str  += '<option value="R-98 Reservatório Elevado - Distribuição - Tapado">R-98 Reservatório Elevado - Distribuição - Tapado</option>';
+            idr_options_str  += '<option value="R-99 RAP Ass. Vaza Barris">R-99 RAP Ass. Vaza Barris</option>';
+            idr_options_str  += '<option value="R-100 Reservatório Elevado - Pinhão">R-100 Reservatório Elevado - Pinhão</option>';
+            idr_options_str  += '<option value="R-104 Reservatório Apoiado - Distribuição - Sede municipal Poço Redondo">R-104 Reservatório Apoiado - Distribuição - Sede municipal Poço Redondo</option>';
+            idr_options_str  += '<option value="R-107 Reservatório Elevado - Assentamento Rural Lagao das Areias - Agrovila Frei Damião">R-107 Reservatório Elevado - Assentamento Rural Lagao das Areias - Agrovila Frei Damião</option>';
+            idr_options_str  += '<option value="R-108 Reservatório Elevado - Distribuição - Pato Branco">R-108 Reservatório Elevado - Distribuição - Pato Branco</option>';
+            idr_options_str  += '<option value="R-109 Reservatório Elevado - Sítios Novos">R-109 Reservatório Elevado - Sítios Novos</option>';
+            idr_options_str  += '<option value="R-110 Reservatório Apoiado - Umbuzeiro do matuto">R-110 Reservatório Apoiado - Umbuzeiro do matuto</option>';
+            idr_options_str  += '<option value="R-112 Reservatório Elevado - Jibóia">R-112 Reservatório Elevado - Jibóia</option>';
+            idr_options_str  += '<option value="R-113 Reservatório Elevado - Distribuição - Oiteiros">R-113 Reservatório Elevado - Distribuição - Oiteiros</option>';
+            idr_options_str  += '<option value="R-114 Reservatório Apoiado - Distribuição - Sede municipal de Gararu">R-114 Reservatório Apoiado - Distribuição - Sede municipal de Gararu</option>';
+            idr_options_str  += '<option value="R-115 Reservatório Elevado - Distribuição - Sede municipal de Gararu">R-115 Reservatório Elevado - Distribuição - Sede municipal de Gararu</option>';
+            idr_options_str  += '<option value="R-116 Reservatório Elevado - Distribuição - Mangeroma">R-116 Reservatório Elevado - Distribuição - Mangeroma</option>';
+            idr_options_str  += '<option value="R-117 Reservatório Apoiado Lagoas - Caatingueira">R-117 Reservatório Apoiado Lagoas - Caatingueira</option>';
+            idr_options_str  += '<option value="R-118 Reservatório Apoiado - Cabaninha">R-118 Reservatório Apoiado - Cabaninha</option>';
+            idr_options_str  += '<option value="R-119 Reservatório Elevado - Distribuição - Borda da Mata">R-119 Reservatório Elevado - Distribuição - Borda da Mata</option>';
+            idr_options_str  += '<option value="R-120 Reservatório Elevado (Sertaneja R-7) - Distribuição - Sede municipal de Nossa Senhora de Lourdes">R-120 Reservatório Elevado (Sertaneja R-7) - Distribuição - Sede municipal de Nossa Senhora de Lourdes</option>';
+            idr_options_str  += '<option value="R-121 Reservatório Apoiado Inchuí">R-121 Reservatório Apoiado Inchuí</option>';
+            idr_options_str  += '<option value="R-122 Reservatório Elevado para Cancelo - Sede municipal de Itabi">R-122 Reservatório Elevado para Cancelo - Sede municipal de Itabi</option>';
+            idr_options_str  += '<option value="R-123 Reservatório Apoiado - Distribuição - Serrote - Boa Hora">R-123 Reservatório Apoiado - Distribuição - Serrote - Boa Hora</option>';
+            idr_options_str  += '<option value="R-124 Reservatório Elevado - Bom Nome">R-124 Reservatório Elevado - Bom Nome</option>';
+            idr_options_str  += '<option value="R-125 RAP Pov. Melancia">R-125 RAP Pov. Melancia</option>';
+            idr_options_str  += '<option value="R-126 Reservatório Elevado Oiteiro Alto">R-126 Reservatório Elevado Oiteiro Alto</option>';
+            idr_options_str  += '<option value="R-127 Reservatório Elevado - Lagoa do Porco">R-127 Reservatório Elevado - Lagoa do Porco</option>';
+            idr_options_str  += '<option value="R-128 Reservatório Apoiado - São Mateus">R-128 Reservatório Apoiado - São Mateus</option>';
+            idr_options_str  += '<option value="R-129 Reservatório Apoiado - Retiro 2">R-129 Reservatório Apoiado - Retiro 2</option>';
+            idr_options_str  += '<option value="R-130 Reservatório Elevado - Fortaleza">R-130 Reservatório Elevado - Fortaleza</option>';
+            idr_options_str  += '<option value="R-131 Reservatório Elevado - Tanque de Pedra">R-131 Reservatório Elevado - Tanque de Pedra</option>';
+            idr_options_str  += '<option value="R-132 Reservatório Apoiado - EE-2 - Alto Sertão - Linda França">R-132 Reservatório Apoiado - EE-2 - Alto Sertão - Linda França</option>';
+            idr_options_str  += '<option value="R-133 Reservatório Elevado - Lagoa Redonda">R-133 Reservatório Elevado - Lagoa Redonda</option>';
+            idr_options_str  += '<option value="R-134 Reservatório Elevado - Poço Preto">R-134 Reservatório Elevado - Poço Preto</option>';
+            idr_options_str  += '<option value="R-135 Reservatório Elevado - Santa Rosa do Ermírio">R-135 Reservatório Elevado - Santa Rosa do Ermírio</option>';
+            idr_options_str  += '<option value="R-136 REL Monte Santo">R-136 REL Monte Santo</option>';
+            idr_options_str  += '<option value="R-137 Reservatório Elevado - Aningas">R-137 Reservatório Elevado - Aningas</option>';
+            idr_options_str  += '<option value="R-139 REL Maravilha">R-139 REL Maravilha</option>';
+            idr_options_str  += '<option value="R-140 Reservatório Apoiado Lagoa das Varas">R-140 Reservatório Apoiado Lagoa das Varas</option>';
+            idr_options_str  += '<option value="R-141 Reservatório Apoiado - Areias">R-141 Reservatório Apoiado - Areias</option>';
+            idr_options_str  += '<option value="R-142 Reservatório Elevado - Distribuição - Jacaré-Curituba - Agrovila Nossa Senhora da Conceição">R-142 Reservatório Elevado - Distribuição - Jacaré-Curituba - Agrovila Nossa Senhora da Conceição</option>';
+            idr_options_str  += '<option value="R-143 Reservatório Elevado - Assentamento Rural Pioneira">R-143 Reservatório Elevado - Assentamento Rural Pioneira</option>';
+            idr_options_str  += '<option value="R-144 Reservatório Elevado - Assentamento Rural Nelson Mandela">R-144 Reservatório Elevado - Assentamento Rural Nelson Mandela</option>';
+            idr_options_str  += '<option value="R-145 Reservatório Elevado - Distribuição - Sede Monte Alegre de Sergipe">R-145 Reservatório Elevado - Distribuição - Sede Monte Alegre de Sergipe</option>';
+            idr_options_str  += '<option value="R-146 REL Tabuleiro">R-146 REL Tabuleiro</option>';
+            idr_options_str  += '<option value="R-147 REL Lagoa da Entrada">R-147 REL Lagoa da Entrada</option>';
+            idr_options_str  += '<option value="R-149 RAP Lagoa do Roçado">R-149 RAP Lagoa do Roçado</option>';
+            idr_options_str  += '<option value="R-150 Reservatório Elevado - São Domingos / São José">R-150 Reservatório Elevado - São Domingos / São José</option>';
+            idr_options_str  += '<option value="R-151 Reservatório Elevado - Senhor do Bonfim">R-151 Reservatório Elevado - Senhor do Bonfim</option>';
+            idr_options_str  += '<option value="R-152 Reservatório Elevado - Craibeiro">R-152 Reservatório Elevado - Craibeiro</option>';
+            idr_options_str  += '<option value="R-153 Reservatório Elevado - Distribuição - Lagoa do Rancho">R-153 Reservatório Elevado - Distribuição - Lagoa do Rancho</option>';
+            idr_options_str  += '<option value="R-154 Reservatório Elevado - Lagoa da Volta">R-154 Reservatório Elevado - Lagoa da Volta</option>';
+            idr_options_str  += '<option value="R-155 Reservatório Elevado - Lagoa Redonda">R-155 Reservatório Elevado - Lagoa Redonda</option>';
+            idr_options_str  += '<option value="R-156 RAP Lagoa Redonda">R-156 RAP Lagoa Redonda</option>';
+            idr_options_str  += '<option value="R-157 Reservatório Elevado - Distribuição - Sede municipal - Nossa Senhora Aparecida">R-157 Reservatório Elevado - Distribuição - Sede municipal - Nossa Senhora Aparecida</option>';
+            idr_options_str  += '<option value="R-158 Reservatório Apoiado - Área 1200 (Semiárido) - Sede municipal de Nossa Senhora da Glória">R-158 Reservatório Apoiado - Área 1200 (Semiárido) - Sede municipal de Nossa Senhora da Glória</option>';
+            idr_options_str  += '<option value="R-159 Reservatório Apoiado 1 - Área 800 - Sede municipal de Graccho Cardoso">R-159 Reservatório Apoiado 1 - Área 800 - Sede municipal de Graccho Cardoso</option>';
+            idr_options_str  += '<option value="R-160 Reservatório Apoiado 2 - Área 800 - Sede municipal de Graccho Cardoso">R-160 Reservatório Apoiado 2 - Área 800 - Sede municipal de Graccho Cardoso</option>';
+            idr_options_str  += '<option value="R-161 Reservatório Apoiado 1 (Da 800) - Área 900 - Feira Nova">R-161 Reservatório Apoiado 1 (Da 800) - Área 900 - Feira Nova</option>';
+            idr_options_str  += '<option value="R-162 Reservatório Apoiado 2 (Retorno da 1200) - Área 900 - Feira Nova">R-162 Reservatório Apoiado 2 (Retorno da 1200) - Área 900 - Feira Nova</option>';
+            idr_options_str  += '<option value="R-163 Reservatório Elevado - Área 1500 - Sede municipal Aquidabã">R-163 Reservatório Elevado - Área 1500 - Sede municipal Aquidabã</option>';
+            idr_options_str  += '<option value="R-164 Reservatório Apoiado - Área 1500 - Sede municipal Aquidabã">R-164 Reservatório Apoiado - Área 1500 - Sede municipal Aquidabã</option>';
+            idr_options_str  += '<option value="R-165 Reservatório Apoiado - Área 1200 (Sertaneja) - Sede municipal de Nossa Senhora da Glória">R-165 Reservatório Apoiado - Área 1200 (Sertaneja) - Sede municipal de Nossa Senhora da Glória</option>';
+            idr_options_str  += '<option value="R-166 Reservatório Apoiado - Área 1200 (Alto Sertão) - Sede municipal de Nossa Senhora da Glória">R-166 Reservatório Apoiado - Área 1200 (Alto Sertão) - Sede municipal de Nossa Senhora da Glória</option>';
+            idr_options_str  += '<option value="R-167 Reservatório Apoiado - Chumbinho">R-167 Reservatório Apoiado - Chumbinho</option>';
+            idr_options_str  += '<option value="R-171 Reservatório Apoiado ETA Gararu">R-171 Reservatório Apoiado ETA Gararu</option>';
+            idr_options_str  += '<option value="R-172 Reservatório Apoiado Porto da Folha">R-172 Reservatório Apoiado Porto da Folha</option>';
+            idr_options_str  += '<option value="R-173 REL Maria Bonita">R-173 REL Maria Bonita</option>';
+            idr_options_str  += '<option value="R-174 Reservatório Elevado SAA Madre Tereza de Calcutá">R-174 Reservatório Elevado SAA Madre Tereza de Calcutá</option>';
+            idr_options_str  += '<option value="R-175 Reservatório Apoiado - Ass. Cajueiro">R-175 Reservatório Apoiado - Ass. Cajueiro</option>';
+            idr_options_str  += '<option value="R-176 Reservatório Elevado - Ass. Cajueiro">R-176 Reservatório Elevado - Ass. Cajueiro</option>';
+            idr_options_str  += '<option value="R-177 Reservatório Apoiado - Distribuição Sede Porto da Folha - Área 1 - Serra do Moreira">R-177 Reservatório Apoiado - Distribuição Sede Porto da Folha - Área 1 - Serra do Moreira</option>';
+            idr_options_str  += '<option value="R-178 Reservatório Apoiado - ETA Alto Sertão - Área 1 - Serra do Moreira">R-178 Reservatório Apoiado - ETA Alto Sertão - Área 1 - Serra do Moreira</option>';
+            idr_options_str  += '<option value="R-179 REL Bonsucesso">R-179 REL Bonsucesso</option>';
+            idr_options_str  += '<option value="R-180 Reservatório Apoiado A-1600">R-180 Reservatório Apoiado A-1600</option>';
+            idr_options_str  += '<option value="R-181 Reservatório Apoiado - EE-1 Alto Sertão - Área 1 - Serra do Moreira">R-181 Reservatório Apoiado - EE-1 Alto Sertão - Área 1 - Serra do Moreira</option>';
+            idr_options_str  += '<option value="R-182 Reservatório Elevado - Área 1700 - Altos Verdes">R-182 Reservatório Elevado - Área 1700 - Altos Verdes</option>';
+            idr_options_str  += '<option value="R-183 Reservatório Elevado - Contendas">R-183 Reservatório Elevado - Contendas</option>';
+            idr_options_str  += '<option value="R-184 Reservatório Apoiado 1 - Área 600 - Itabi">R-184 Reservatório Apoiado 1 - Área 600 - Itabi</option>';
+            idr_options_str  += '<option value="R-185 Reservatório Apoiado 2 - Área 600 - Itabi">R-185 Reservatório Apoiado 2 - Área 600 - Itabi</option>';
+            idr_options_str  += '<option value="R-186 Reservatório de Transição">R-186 Reservatório de Transição</option>';
+            idr_options_str  += '<option value="R-187 Reservatório de Transição">R-187 Reservatório de Transição</option>';
+            idr_options_str  += '<option value="R-188 Reservatório Elevado Pov. Descoberto">R-188 Reservatório Elevado Pov. Descoberto</option>';
+            idr_options_str  += '<option value="R-189 Reservatório Elevado - Assentamento Rural Manoel Martinho">R-189 Reservatório Elevado - Assentamento Rural Manoel Martinho</option>';
+            idr_options_str  += '<option value="R-190 Reservatório Elevado - ETA Cabaçeiro">R-190 Reservatório Elevado - ETA Cabaçeiro</option>';
+            idr_options_str  += '<option value="R-191 Reservatório Apoiado - Área 700 - Atalho">R-191 Reservatório Apoiado - Área 700 - Atalho</option>';
+            idr_options_str  += '<option value="R-192 REL Ass. Rural Raimundo Monteiro">R-192 REL Ass. Rural Raimundo Monteiro</option>';
+            idr_options_str  += '<option value="R-193 Reservatório Elevado - Distribuição - Barra-Cinzeiro-Gravatá">R-193 Reservatório Elevado - Distribuição - Barra-Cinzeiro-Gravatá</option>';
+            idr_options_str  += '<option value="R-194 Reservatório Apoiado - Campo Redondo">R-194 Reservatório Apoiado - Campo Redondo</option>';
+            idr_options_str  += '<option value="R-195 RAP Jenipatuba">R-195 RAP Jenipatuba</option>';
+            idr_options_str  += '<option value="R-196 REL Agrovila Canadá (Ass. Jacaré-Curituba)">R-196 REL Agrovila Canadá (Ass. Jacaré-Curituba)</option>';
+            idr_options_str  += '<option value="R-197 Reservatório Apoiado Maravilha / Pedro Alexandre">R-197 Reservatório Apoiado Maravilha / Pedro Alexandre</option>';
+            idr_options_str  += '<option value="R-198 Reservatório Elevado (Dom José Brandão de Castro)">R-198 Reservatório Elevado (Dom José Brandão de Castro)</option>';
+            idr_options_str  += '<option value="R-199 Reservatório (Carlito Maia)">R-199 Reservatório (Carlito Maia)</option>';
+            idr_options_str  += '<option value="R-200 Reservatório Apoiado - ETA Assentamento Cajueiro">R-200 Reservatório Apoiado - ETA Assentamento Cajueiro</option>';
+            idr_options_str  += '<option value="R-201 Reservatório Elevado (Pov. Cajueiro)">R-201 Reservatório Elevado (Pov. Cajueiro)</option>';
+            idr_options_str  += '<option value="R-202 REL Jacaré (1)">R-202 REL Jacaré (1)</option>';
+            idr_options_str  += '<option value="R-203 REL Povoado Jacaré">R-203 REL Povoado Jacaré</option>';
+            idr_options_str  += '<option value="R-204 RAP ETA Araticum">R-204 RAP ETA Araticum</option>';
+            idr_options_str  += '<option value="R-205 REL Niterói">R-205 REL Niterói</option>';
+            idr_options_str  += '<option value="R-206 RAP EE CRAIBEIRO">R-206 RAP EE CRAIBEIRO</option>';
+            idr_options_str  += '<option value="R-207 REL Lagoa dos Tamborins">R-207 REL Lagoa dos Tamborins</option>';
+            idr_options_str  += '<option value="R-208 RAP Tamborins, Riachão, Cachoeirinha">R-208 RAP Tamborins, Riachão, Cachoeirinha</option>';
+            idr_options_str  += '<option value="R-209 Reservatório Elevado Tabuleiro">R-209 Reservatório Elevado Tabuleiro</option>';
+            idr_options_str  += '<option value="R-210 Reservatório Elevado Lagoa Funda">R-210 Reservatório Elevado Lagoa Funda</option>';
+            idr_options_str  += '<option value="R-211 REL Flor da Índia">R-211 REL Flor da Índia</option>';
+            idr_options_str  += '<option value="R-212 REL Luiz Beltrão">R-212 REL Luiz Beltrão</option>';
+            idr_options_str  += '<option value="R-213 RAP ETA Curralinho">R-213 RAP ETA Curralinho</option>';
+            idr_options_str  += '<option value="R-214 REL José Unaldo Oliveira (Júlia)">R-214 REL José Unaldo Oliveira (Júlia)</option>';
+            idr_options_str  += '<option value="R-215 REL Serra do Moreira">R-215 REL Serra do Moreira</option>';
+            idr_options_str  += '<option value="R-216 Reservatório Elevado - Ass. Rural Flamengo">R-216 Reservatório Elevado - Ass. Rural Flamengo</option>';
+            idr_options_str  += '<option value="R-217 RAP Lagoa do Carneiro">R-217 RAP Lagoa do Carneiro</option>';
+            idr_options_str  += '<option value="R-218 Reservatório Enterrado (Poço de Sucção - Estação Elevatória Junco-Ingassu)">R-218 Reservatório Enterrado (Poço de Sucção - Estação Elevatória Junco-Ingassu)</option>';
+            idr_options_str  += '<option value="R-219 RAP - Três Barras">R-219 RAP - Três Barras</option>';
+            idr_options_str  += '<option value="R-220 RAP Cachoeira">R-220 RAP Cachoeira</option>';
+            idr_options_str  += '<option value="R-221 Reservatório Apoiado - Área 200 - Lagoa dos Campinhos">R-221 Reservatório Apoiado - Área 200 - Lagoa dos Campinhos</option>';
+            idr_options_str  += '<option value="R-222 Reservatório Elevado - SAA Lagoa Primeira">R-222 Reservatório Elevado - SAA Lagoa Primeira</option>';
+            idr_options_str  += '<option value="R-223 Reservatório Apoiado T-3 - Mata Grande">R-223 Reservatório Apoiado T-3 - Mata Grande</option>';
+            idr_options_str  += '<option value="R-224 Reservatório Apoiado - SAA Niterói - Mucambo">R-224 Reservatório Apoiado - SAA Niterói - Mucambo</option>';
+            idr_options_str  += '<option value="R-226 Reservatório Elevado - SAA Segredo">R-226 Reservatório Elevado - SAA Segredo</option>';
+            idr_options_str  += '<option value="R-227 Reservatório Elevado - SAA Carro Quebrado">R-227 Reservatório Elevado - SAA Carro Quebrado</option>';
+            idr_options_str  += '<option value="R-228 Reservatório Apoiado Lagoa da Mata">R-228 Reservatório Apoiado Lagoa da Mata</option>';
+            idr_options_str  += '<option value="R-229 Reservatório Apoiado Caendas">R-229 Reservatório Apoiado Caendas</option>';
+            idr_options_str  += '<option value="R-230 Reservatório Apoiado Velame">R-230 Reservatório Apoiado Velame</option>';
+            idr_options_str  += '<option value="R-231 Reservatório Apoiado Itaquatiara">R-231 Reservatório Apoiado Itaquatiara</option>';
+            idr_options_str  += '<option value="R-232 Reservatório Apoiado Lagoa do Féu">R-232 Reservatório Apoiado Lagoa do Féu</option>';
+            idr_options_str  += '<option value="R-233 Reservatório Apoiado Pedra Nova">R-233 Reservatório Apoiado Pedra Nova</option>';
+            idr_options_str  += '<option value="R-234 Reservatório Apoiado Cuiabá">R-234 Reservatório Apoiado Cuiabá</option>';
+            idr_options_str  += '<option value="R-235 Reservatório Elevado SAA Maria Bonita 1">R-235 Reservatório Elevado SAA Maria Bonita 1</option>';
+            idr_options_str  += '<option value="R-236 Resrvatório Apoiado - Vaca Preta">R-236 Resrvatório Apoiado - Vaca Preta</option>';
+            idr_options_str  += '<option value="R-237 RAP Sede São Miguel do Aleixo">R-237 RAP Sede São Miguel do Aleixo</option>';
+            idr_options_str  += '<option value="R-238 Reservatório Apoiado Pedra Mole">R-238 Reservatório Apoiado Pedra Mole</option>';
+            idr_options_str  += '<option value="R-240 RAP - Estação Elevatória 2 - SAA Lagoa do Carneiro">R-240 RAP - Estação Elevatória 2 - SAA Lagoa do Carneiro</option>';
+            idr_options_str  += '<option value="R-241 RAP Ass. Monte Santo">R-241 RAP Ass. Monte Santo</option>';
+            idr_options_str  += '<option value="R-242 Reservatório Elevado - João Pedro Teixeira">R-242 Reservatório Elevado - João Pedro Teixeira</option>';
+            idr_options_str  += '<option value="R-243 Reservatório Apoiado (Caixa de Passagem) Ass. João Pedro Teixeira">R-243 Reservatório Apoiado (Caixa de Passagem) Ass. João Pedro Teixeira</option>';
+            idr_options_str  += '<option value="R-244 Reservatório Apoiado Ass. Nova Vida">R-244 Reservatório Apoiado Ass. Nova Vida</option>';
+            idr_options_str  += '<option value="R-245 RAP Carlito Maia">R-245 RAP Carlito Maia</option>';
+            idr_options_str  += '<option value="R-246 REL Cotia 3">R-246 REL Cotia 3</option>';
+            idr_options_str  += '<option value="R-247 RAP Cotia 3">R-247 RAP Cotia 3</option>';
+            idr_options_str  += '<option value="R-248 RAP Cotia 2">R-248 RAP Cotia 2</option>';
+            idr_options_str  += '<option value="R-249 REL Cotia 2">R-249 REL Cotia 2</option>';
+            idr_options_str  += '<option value="R-250 REL Gameleiro">R-250 REL Gameleiro</option>';
+            idr_options_str  += '<option value="R-251 RAP Gameleiro">R-251 RAP Gameleiro</option>';
+            idr_options_str  += '<option value="R-252 Reservatório Apoiado SAA Maria Bonita - Madre Tereza">R-252 Reservatório Apoiado SAA Maria Bonita - Madre Tereza</option>';
+            idr_options_str  += '<option value="R-253 Reservatório Apoiado - Bom nome">R-253 Reservatório Apoiado - Bom nome</option>';
+            idr_options_str  += '<option value="R-254 Reservatório Apoiado - Quixabeira">R-254 Reservatório Apoiado - Quixabeira</option>';
+            idr_options_str  += '<option value="R-255 Reservatório Apoiado - Imbira">R-255 Reservatório Apoiado - Imbira</option>';
+            idr_options_str  += '<option value="R-256 Reservatório Apoiado 1 - Quixabeira">R-256 Reservatório Apoiado 1 - Quixabeira</option>';
+            idr_options_str  += '<option value="R-257 Reservatório Elevado Rajas">R-257 Reservatório Elevado Rajas</option>';
+            idr_options_str  += '<option value="R-258 Reservatório T2 - Grande Integrado Sertaneja">R-258 Reservatório T2 - Grande Integrado Sertaneja</option>';
+            idr_options_str  += '<option value="R-259 Reservatório T1 - Grande Integrado Sertaneja">R-259 Reservatório T1 - Grande Integrado Sertaneja</option>';
+            idr_options_str  += '<option value="R-260 Reservatório Apoiado Lagoa do Rancho">R-260 Reservatório Apoiado Lagoa do Rancho</option>';
+            idr_options_str  += '<option value="R-261 Reservatório Apoiado - Mulungu">R-261 Reservatório Apoiado - Mulungu</option>';
+            idr_options_str  += '<option value="R-262 Reservatório Apoiado (EE-69)">R-262 Reservatório Apoiado (EE-69)</option>';
+            idr_options_str  += '<option value="R-263 Reservatório Apoiado ETA Escurial">R-263 Reservatório Apoiado ETA Escurial</option>';
+            idr_options_str  += '<option value="R-264 Reservatório Elevado João Pereira">R-264 Reservatório Elevado João Pereira</option>';
+            idr_options_str  += '<option value="R-265 Unidade de Distribuição Tanquinho">R-265 Unidade de Distribuição Tanquinho</option>';
+            idr_options_str  += '<option value="R-266 Reservatório Apoiado Nova Olinda - Antonio Alves">R-266 Reservatório Apoiado Nova Olinda - Antonio Alves</option>';
+            idr_options_str  += '<option value="R-267 Reservatório da ETA Cajueiro">R-267 Reservatório da ETA Cajueiro</option>';
+            idr_options_str  += '<option value="R-268 Reservatório do Sistema de Poços Cágados (Tanque de Reunião)">R-268 Reservatório do Sistema de Poços Cágados (Tanque de Reunião)</option>';
+            idr_options_str  += '<option value="R-269 Reservatório Apoiado - Campim Grosso">R-269 Reservatório Apoiado - Campim Grosso</option>';
+            idr_options_str  += '<option value="R-270 Reservatório Apoiado Niterói">R-270 Reservatório Apoiado Niterói</option>';
+            idr_options_str  += '<option value="R-271 Reservatório Apoiado Manuíno">R-271 Reservatório Apoiado Manuíno</option>';
+            idr_options_str  += '<option value="R-272 Reservatório Apoiado Mandacaru (Sucção da Elevatória)">R-272 Reservatório Apoiado Mandacaru (Sucção da Elevatória)</option>';
+            idr_options_str  += '<option value="R-273 Reservatório Enterrado - Booster Junco-Ingassu 01">R-273 Reservatório Enterrado - Booster Junco-Ingassu 01</option>';
+            idr_options_str  += '<option value="R-274 Reservatório Apoiado Gruta da Macambira (Sucção da Elevatória)">R-274 Reservatório Apoiado Gruta da Macambira (Sucção da Elevatória)</option>';
+            idr_options_str  += '<option value="R-275 Reservatório Apoiado Lagoa Primeira">R-275 Reservatório Apoiado Lagoa Primeira</option>';
+            sel_idr.innerHTML = idr_options_str;
+            div_idr.appendChild(sel_idr);
+            var lab_idr = document.createElement('div');
+            lab_idr.innerHTML = 'idr';
+            lab_idr.className = 'filterLabel';
+            div_idr.appendChild(lab_idr);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
             var div_operalocal = document.createElement('div');
             div_operalocal.id = "div_operalocal";
             div_operalocal.className= "filterselect";
@@ -3119,15 +3389,15 @@
             lab_distribmat.innerHTML = 'distribmat';
             lab_distribmat.className = 'filterLabel';
             div_distribmat.appendChild(lab_distribmat);
-        resetLabels([layer_SAAS7Reservatrios_1]);
+        resetLabels([layer_SAAS7Reservatrios_2]);
         map.on("zoomend", function(){
-            resetLabels([layer_SAAS7Reservatrios_1]);
+            resetLabels([layer_SAAS7Reservatrios_2]);
         });
         map.on("layeradd", function(){
-            resetLabels([layer_SAAS7Reservatrios_1]);
+            resetLabels([layer_SAAS7Reservatrios_2]);
         });
         map.on("layerremove", function(){
-            resetLabels([layer_SAAS7Reservatrios_1]);
+            resetLabels([layer_SAAS7Reservatrios_2]);
         });
         </script>
     </body>
