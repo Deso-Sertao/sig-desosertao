@@ -754,17 +754,3 @@ function fnc__specialcol_(values, context) {
 function fnc_project_color(values, context) {
     return false;
 };
-
-
-
-function exp_label_Areas_operacionais_1_eval_expression(context) {
-    // geocodigo || '@' || codigo
-
-    var feature = context.feature;
-    
-    if (feature.properties) {
-        return ((feature.properties['geocodigo']  + '@') + feature.properties['codigo'] );
-    } else {
-        return ((feature['geocodigo']  + '@') + feature['codigo'] );
-    }
-}
